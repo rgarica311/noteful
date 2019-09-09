@@ -1,0 +1,9 @@
+.addFolder {
+  position: fixed;
+  left: 34vw;
+  bottom: 70vh;
+}
+
+.add-folder-control {
+  margin-left: 15px;
+}
