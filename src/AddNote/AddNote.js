@@ -90,7 +90,7 @@ export default class AddNote extends Component {
         'content-type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(response => console.log('Success:', JSON.stringify(response)))
+    }).then(this.props.history.push('/'))
     .catch(error => console.error('Error:', error))
     console.log('name.value:', name.value)
   }

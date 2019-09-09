@@ -78,18 +78,18 @@ class App extends Component {
                     <Route exact key={path} path={path} component={NoteListNav}/>
                 ))}
                 <Route path="/note/:noteId" component={NotePageNav}/>
+                <Route path="/add-folder" component={NotePageNav}/>
                 <Route path="/add-folder" render={props =>
                 <div>
-                  <NotePageNav/>
                   <AddFolderError>
-                    <AddFolder/>
+                    <AddFolder history={props.history}/>
                   </AddFolderError>
                 </div>} />
+                <Route path="/add-note" component={NotePageNav}/>
                 <Route path="/add-note" render={props =>
                 <div>
-                  <NotePageNav/>
                   <AddNoteError>
-                    <AddNote folders={this.state.folders}/>
+                    <AddNote history={props.history} folders={this.state.folders}/>
                   </AddNoteError>
                 </div>} />
             </>

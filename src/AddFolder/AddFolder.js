@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import ValidateFolder from './ValidateFolder'
+import { withRouter } from 'react-router-dom'
 import './AddFolder.css'
 
 
 export default class AddFolder extends Component {
   constructor(props){
     super(props)
+    console.log('props in constructor', props)
     this.state = {
       name: {
         value: '',
         touched: false
-      }
+      },
     }
 
   }
@@ -38,18 +40,21 @@ export default class AddFolder extends Component {
         'content-type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(response => console.log('Success:', JSON.stringify(response)))
+    }).then(this.props.history.push('/'))
     .catch(error => console.error('Error:', error))
     console.log('name.value:', name.value)
   }
 
+
+
   render(){
+
     return(
       <form className="addFolder" onSubmit={e => this.handleSubmit(e)}>
         <h2>Add Folder</h2>
         <div className="formGroup">
           <label htmlFor="name">Folder Name</label>
-          <input type="text" className="add-folder-control" name="name" onChange={e => this.updateFolderName(e.target.value)}/>
+          <input type="text" className="folder-input" name="name" onChange={e => this.updateFolderName(e.target.value)}/>
           {this.state.name.touched && (
             <ValidateFolder message={this.validateFolderName()}/>
           )}
