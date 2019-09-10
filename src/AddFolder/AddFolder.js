@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ValidateFolder from './ValidateFolder'
 import { withRouter } from 'react-router-dom'
 import './AddFolder.css'
+import NotefulContext from '../NotefulContext'
 
 
 export default class AddFolder extends Component {
@@ -13,6 +14,7 @@ export default class AddFolder extends Component {
         value: '',
         touched: false
       },
+
     }
 
   }
@@ -34,36 +36,44 @@ export default class AddFolder extends Component {
     e.preventDefault()
     const name = this.state.name
     const data = {name: name.value}
+    console.log('folders in handle submit')
     fetch('http://localhost:9090/folders', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(this.props.history.push('/'))
+    }).then(
+      this.props.getFolders,
+      this.props.history.push('/')
+    )
     .catch(error => console.error('Error:', error))
     console.log('name.value:', name.value)
   }
 
-
-
   render(){
 
     return(
-      <form className="addFolder" onSubmit={e => this.handleSubmit(e)}>
-        <h2>Add Folder</h2>
-        <div className="formGroup">
-          <label htmlFor="name">Folder Name</label>
-          <input type="text" className="folder-input" name="name" onChange={e => this.updateFolderName(e.target.value)}/>
-          {this.state.name.touched && (
-            <ValidateFolder message={this.validateFolderName()}/>
-          )}
-        </div>
-        <button type="submit" className="add-folder-button" disabled={
-          this.validateFolderName()
-        }>Save
-        </button>
-      </form>
+      <NotefulContext.Consumer>
+      {(context) => (
+        console.log('context contains', context),
+        <form className="addFolder" onSubmit={e => this.handleSubmit(e, context.setFolders)}>
+          <h2>Add Folder</h2>
+          <div className="formGroup">
+            <label htmlFor="name">Folder Name</label>
+            <input type="text" className="folder-input" name="name" onChange={e => this.updateFolderName(e.target.value)}/>
+            {this.state.name.touched && (
+              <ValidateFolder message={this.validateFolderName()}/>
+            )}
+          </div>
+          <button type="submit" className="add-folder-button" disabled={
+            this.validateFolderName()
+          }>Save
+          </button>
+        </form>
+      )}
+      </NotefulContext.Consumer>
+
     )
   }
 

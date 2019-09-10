@@ -22,10 +22,12 @@ class App extends Component {
     state = {
         notes: [],
         folders: [],
-        error: null
+        error: null,
     };
 
+
     setFolders = folders => {
+      console.log('setFolders running, fodlers', folders)
       this.setState({
         folders
       })
@@ -44,6 +46,30 @@ class App extends Component {
       this.setState({
         notes: newNotes
       })
+    }
+
+    getFolders = () =>  {
+      fetch('http://localhost:9090/folders')
+      .then(res => {
+        if(!res.ok) {
+          throw new Error(res.status)
+        }
+        return res.json()
+      })
+      .then(this.setFolders)
+      .catch(error => this.setState({ error }))
+    }
+
+    getNotes = () => {
+      fetch('http://localhost:9090/notes')
+      .then(res => {
+        if(!res.ok) {
+          throw new Error(res.stats)
+        }
+        return res.json()
+      })
+      .then(this.setNotes)
+      .catch(error => this.setState({ error }))
     }
 
     componentDidMount() {
@@ -82,14 +108,14 @@ class App extends Component {
                 <Route path="/add-folder" render={props =>
                 <div>
                   <AddFolderError>
-                    <AddFolder history={props.history}/>
+                    <AddFolder history={props.history} getFolders={this.getFolders}/>
                   </AddFolderError>
                 </div>} />
                 <Route path="/add-note" component={NotePageNav}/>
                 <Route path="/add-note" render={props =>
                 <div>
                   <AddNoteError>
-                    <AddNote history={props.history} folders={this.state.folders}/>
+                    <AddNote history={props.history} getNotes={this.getNotes} folders={this.state.folders}/>
                   </AddNoteError>
                 </div>} />
             </>
@@ -116,7 +142,8 @@ class App extends Component {
       const contextValue = {
         notes: this.state.notes,
         folders: this.state.folders,
-        deleteNote: this.deleteNote
+        deleteNote: this.deleteNote,
+        setFolders: this.setFolders
       }
         return (
           <NotefulContext.Provider value={contextValue}>
