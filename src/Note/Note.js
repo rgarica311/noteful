@@ -1,14 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
 import NotefulContext from '../NotefulContext'
 import PropTypes from 'prop-types'
 
 function deleteNoteRequest(noteId, callback){
-  console.log('callback', callback)
-  console.log('noteId', noteId)
+
   fetch(`http://localhost:9090/notes/${noteId}`, {
     method: 'DELETE',
     headers: {
@@ -32,7 +30,6 @@ function deleteNoteRequest(noteId, callback){
 }
 
 export default function Note(props) {
-  console.log('note props', props)
   return (
     <NotefulContext.Consumer>
     {(context) => (

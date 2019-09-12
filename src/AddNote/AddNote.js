@@ -29,7 +29,6 @@ export default class AddNote extends Component {
   }
 
   updateNoteFolder(folder){
-    console.log('selected note folder', folder)
     this.setState({folder: {value: folder, touched: true}})
   }
 
@@ -42,7 +41,7 @@ export default class AddNote extends Component {
     if(name.length === 0) {
       return 'Name is required'
     } else if (name.length < 3) {
-      return 'Note name must be at lest 3 character long'
+      return 'Note name must be at least 3 characters long'
     }
   }
 
@@ -50,27 +49,23 @@ export default class AddNote extends Component {
     const folderName = this.state.folder.value.trim()
     const folders = []
 
-    console.log('folders object', this.props.folders)
 
     for(let i=0; i<this.props.folders.length; i++) {
       folders.push(this.props.folders[i].name)
     }
     if(folders.includes(folderName)){
-      console.log(`Folder ${folderName} is available`)
       return `Folder ${folderName} is available`
     } else {
-      console.log(`Folder ${folderName} does not exist`)
       return `Folder ${folderName} does not exist`
     }
-    console.log('folders',folders)
   }
 
   validateNoteContent(value) {
-    const name = this.state.content.value.trim()
-    if(name.length === 0) {
-      return 'Name is required'
-    } else if (name.length < 3) {
-      return 'Note name must be at lest 3 character long'
+    const content = this.state.content.value.trim()
+    if(content.length === 0) {
+      return 'Note cannot be empty'
+    } else if (content.length < 3) {
+      return 'Note content must be at least 3 characters long'
     }
   }
 
@@ -94,14 +89,12 @@ export default class AddNote extends Component {
       this.props.getNotes,
       this.props.history.push('/')
     ).catch(error => console.error('Error:', error))
-    console.log('name.value:', name.value)
   }
 
   renderOptions() {
     return (
       <>
         {this.props.folders.map(folder => (
-          console.log('folder', folder),
           <option key={folder.name} value={folder.name}>{folder.name}</option>
         ))
         }

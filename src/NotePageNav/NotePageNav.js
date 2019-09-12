@@ -1,24 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
 import './NotePageNav.css'
 import NotefulContext from '../NotefulContext'
 
 
-export default class NotePageNav extends Component {
-  constructor(props){
-    super(props)
-  }
-  render(){
+export default function NotePageNav(props){
+
+
     return (
       <NotefulContext.Consumer>
       {(context) => (
-        console.log('props.history', this.props.history),
         <div className='NotePageNav'>
           <CircleButton
             tag='button'
             role='link'
-            onClick={() => this.props.history.goBack()}
+            onClick={() => props.history.goBack()}
             className='NotePageNav__back-button'
           >
             <FontAwesomeIcon icon='chevron-left' />
@@ -35,7 +32,7 @@ export default class NotePageNav extends Component {
       </NotefulContext.Consumer>
     )
 
-  }
+
 
 }
 

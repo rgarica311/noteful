@@ -21,7 +21,7 @@ CircleButton.defaultProps ={
 CircleButton.propTypes = {
   children: PropTypes.array,
   className: PropTypes.string,
-  tag: PropTypes.func,
+  tag: PropTypes.string,
   to: PropTypes.string,
   type: PropTypes.string
 }

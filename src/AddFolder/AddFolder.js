@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ValidateFolder from './ValidateFolder'
-import { withRouter } from 'react-router-dom'
 import './AddFolder.css'
 import NotefulContext from '../NotefulContext'
 
@@ -8,7 +7,6 @@ import NotefulContext from '../NotefulContext'
 export default class AddFolder extends Component {
   constructor(props){
     super(props)
-    console.log('props in constructor', props)
     this.state = {
       name: {
         value: '',
@@ -36,7 +34,6 @@ export default class AddFolder extends Component {
     e.preventDefault()
     const name = this.state.name
     const data = {name: name.value}
-    console.log('folders in handle submit')
     fetch('http://localhost:9090/folders', {
       method: 'POST',
       headers: {
@@ -48,7 +45,6 @@ export default class AddFolder extends Component {
       this.props.history.push('/')
     )
     .catch(error => console.error('Error:', error))
-    console.log('name.value:', name.value)
   }
 
   render(){
@@ -56,7 +52,6 @@ export default class AddFolder extends Component {
     return(
       <NotefulContext.Consumer>
       {(context) => (
-        console.log('context contains', context),
         <form className="addFolder" onSubmit={e => this.handleSubmit(e, context.setFolders)}>
           <h2>Add Folder</h2>
           <div className="formGroup">
