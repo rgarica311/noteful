@@ -21,7 +21,15 @@ CircleButton.defaultProps ={
 CircleButton.propTypes = {
   children: PropTypes.array,
   className: PropTypes.string,
-  tag: PropTypes.string,
+  tag: (props, propName) => {
+    const prop = props[propName]
+
+    if(typeof prop != 'function') {
+      if(typeof prop != 'string') {
+        return new Error(`Invalid prop, ${propName} is expected to be a string or function ${propName} is of type ${typeof prop}`)
+      }
+    }
+  },
   to: PropTypes.string,
   type: PropTypes.string
 }

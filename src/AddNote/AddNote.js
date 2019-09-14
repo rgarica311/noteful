@@ -17,12 +17,15 @@ export default class AddNote extends Component {
         touched: false
       },
       folder: {
-        value: '',
+        value: 'Important',
         touched: false
-      }
+      },
+
     }
 
   }
+
+
 
   updateNoteName(name){
     this.setState({name: {value: name, touched: true}})
@@ -69,8 +72,6 @@ export default class AddNote extends Component {
     }
   }
 
-
-
   handleSubmit(e) {
     e.preventDefault()
     const name = this.state.name
@@ -78,7 +79,7 @@ export default class AddNote extends Component {
     const folderIndex = findFolderId(this.props.folders, 'name', folderName )
     const folderId = this.props.folders[folderIndex].id
     const content = this.state.content
-    const data = {name: name.value, folderId: folderId, content: content.value }
+    const data = {name: name.value, folderId: folderId, content: content.value, modified: new Date()}
     fetch('http://localhost:9090/Notes', {
       method: 'POST',
       headers: {
@@ -131,4 +132,8 @@ export default class AddNote extends Component {
     )
   }
 
+}
+
+AddNote.defaultProps = {
+  folders: 'Important'
 }

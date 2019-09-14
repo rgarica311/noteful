@@ -118,12 +118,16 @@ class App extends Component {
                   </AddFolderError>
                 </div>} />
                 <Route path="/add-note" component={NotePageNav}/>
-                <Route path="/add-note" render={props =>
-                <div>
-                  <AddNoteError>
-                    <AddNote history={props.history} getNotes={this.getNotes} folders={this.state.folders}/>
-                  </AddNoteError>
-                </div>} />
+                <Route path="/add-note" render={props => {
+                  const {noteId} = props.match.params;
+                  const note = findNote(notes, noteId)
+                  return (
+                  <div>
+                    <AddNoteError>
+                      <AddNote note={note} history={props.history} getNotes={this.getNotes} folders={this.state.folders}/>
+                    </AddNoteError>
+                  </div> )
+                }}/>
             </>
         );
     }
@@ -150,9 +154,11 @@ class App extends Component {
                 <Route path="/note/:noteId" render={routeProps => {
                   const {noteId} = routeProps.match.params
                   const note = findNote(notes, noteId)
+                  console.log(`noteid in route noteid ${noteId}`)
+                  console.log(`note in route noteid ${note}`)
                   return (
                     <NotePageError>
-                      <NotePageMain {...routeProps} note={note}/>
+                      <NotePageMain {...routeProps} history={routeProps.history} note={note}/>
                     </NotePageError> )
                 }}/>
             </>
