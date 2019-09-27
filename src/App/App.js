@@ -41,15 +41,26 @@ class App extends Component {
 
     deleteNote = noteId => {
       const newNotes = this.state.notes.filter(note =>
-        note.id !== noteId
+        note.id !== parseInt(noteId)
       )
       this.setState({
         notes: newNotes
       })
     }
 
+    deleteFolder = folderId => {
+      const newFolders = this.state.folders.filter(folder =>
+        folder.id !== parseInt(folderId)
+      )
+      this.setState({
+        folders: newFolders
+      })
+      this.getNotes()
+
+    }
+
     getFolders = () =>  {
-      fetch('http://localhost:9090/folders')
+      fetch('http://localhost:8005/folders')
       .then(res => {
         if(!res.ok) {
           throw new Error(res.status)
@@ -61,7 +72,7 @@ class App extends Component {
     }
 
     getNotes = () => {
-      fetch('http://localhost:9090/notes')
+      fetch('http://localhost:8005/notes')
       .then(res => {
         if(!res.ok) {
           throw new Error(res.stats)
@@ -75,17 +86,10 @@ class App extends Component {
     componentDidMount() {
         // fake date loading from API call
         //setTimeout(() => this.setState(dummyStore), 600);
-        fetch('http://localhost:9090/folders')
-        .then(res => {
-          if(!res.ok) {
-            throw new Error(res.status)
-          }
-          return res.json()
-        })
-        .then(this.setFolders)
-        .catch(error => this.setState({ error }))
+        this.getFolders()
+        this.getNotes()
 
-        fetch('http://localhost:9090/notes')
+        /*fetch('http://localhost:8005/notes')
         .then(res => {
           if(!res.ok) {
             throw new Error(res.stats)
@@ -93,20 +97,20 @@ class App extends Component {
           return res.json()
         })
         .then(this.setNotes)
-        .catch(error => this.setState({ error }))
+        .catch(error => this.setState({ error }))*/
     }
 
     renderNavRoutes() {
         const {notes, folders} = this.state;
         return (
             <>
-                {['/', '/folder/:folderId'].map(path => (
+                {['/', '/folders/:id'].map(path => (
                     <Route exact key={path} path={path} component={NoteListNav}/>
                 ))}
-                <Route path="/note/:noteId" render={routeProps => {
+                <Route path="/notes/:id" render={routeProps => {
                     const {noteId} = routeProps.match.params;
                     const note = findNote(notes, noteId) || {};
-                    const folder = findFolder(folders, note.folderId);
+                    const folder = findFolder(folders, note.folderid);
                     return <NotePageNav {...routeProps} folder={folder} />;
                 }}/>
 
@@ -136,13 +140,16 @@ class App extends Component {
         const {notes} = this.state;
         return (
             <>
-                {['/', '/folder/:folderId'].map(path => (
+                {['/', '/folders/:id'].map(path => (
                     <Route exact key={path} path={path} render={routeProps => {
-                        const {folderId} = routeProps.match.params;
+                        const { id } = routeProps.match.params;
+                        console.log(`folderid: ${id}`)
+                        console.log(`notes: ${notes}`)
                         const notesForFolder = getNotesForFolder(
                             notes,
-                            folderId
+                            parseInt(id)
                         );
+                        console.log(`notesforfolder: ${notesForFolder}`)
                         return (
                             <NoteListMain
                                 {...routeProps}
@@ -151,7 +158,7 @@ class App extends Component {
                         );
                     }}/>
                 ))}
-                <Route path="/note/:noteId" render={routeProps => {
+                <Route path="/notes/:id" render={routeProps => {
                   const {noteId} = routeProps.match.params
                   const note = findNote(notes, noteId)
                   console.log(`noteid in route noteid ${noteId}`)
@@ -170,7 +177,8 @@ class App extends Component {
         notes: this.state.notes,
         folders: this.state.folders,
         deleteNote: this.deleteNote,
-        setFolders: this.setFolders
+        setFolders: this.setFolders,
+        deleteFolder: this.deleteFolder
       }
         return (
           <NotefulContext.Provider value={contextValue}>

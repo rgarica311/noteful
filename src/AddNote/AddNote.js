@@ -79,8 +79,9 @@ export default class AddNote extends Component {
     const folderIndex = findFolderId(this.props.folders, 'name', folderName )
     const folderId = this.props.folders[folderIndex].id
     const content = this.state.content
-    const data = {name: name.value, folderId: folderId, content: content.value, modified: new Date()}
-    fetch('http://localhost:9090/Notes', {
+    const data = {name: name.value, folderid: parseInt(folderId), content: content.value, modified: new Date()}
+    console.log(`data: ${data}`, data)
+    fetch('http://localhost:8005/notes', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -121,6 +122,7 @@ export default class AddNote extends Component {
           )}
           <label htmlFor="Folder">Pick Folder:</label>
           <select name="Folder" onChange={e => this.updateNoteFolder(e.target.value)}>
+            <option>Pick Folder:</option>
             {this.renderOptions()}
           </select>
         </div>

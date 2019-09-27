@@ -14,9 +14,10 @@ export default function NoteListMain(props) {
           {props.notes.map(note =>
             <li key={note.id}>
               <Note
-                id={note.id}
+                id={note.id.toString()}
                 name={note.name}
                 modified={note.modified}
+                folderid={note.folderid}
               />
             </li>
           )}

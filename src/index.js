@@ -4,15 +4,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faPlus, faChevronLeft, faTrashAlt, faCheckDouble
 } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import './index.css'
 import App from './App/App'
 
 library.add(faPlus, faChevronLeft, faTrashAlt, faCheckDouble)
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById('root')
 )
