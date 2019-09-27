@@ -1,10 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Note from '../Note/Note'
-import CircleButton from '../CircleButton/CircleButton'
-import './NoteListMain.css'
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Note from '../Note/Note';
+import CircleButton from '../CircleButton/CircleButton';
+import './NoteListMain.css';
 
 export default function NoteListMain(props) {
   return (
@@ -27,18 +26,18 @@ export default function NoteListMain(props) {
             tag={Link}
             to='/add-note'
             type='button'
-            className='NoteListMain__add-note-button'
-          >
+            className='NoteListMain__add-note-button'>
+
             <FontAwesomeIcon icon='plus' />
-            <br />
+
             Note
           </CircleButton>
         </div>
       </section>
 
-  )
+  );
 }
 
 NoteListMain.defaultProps = {
   notes: [],
-}
+};

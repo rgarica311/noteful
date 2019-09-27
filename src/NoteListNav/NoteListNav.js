@@ -1,37 +1,39 @@
-import React, {Component} from 'react'
-import { NavLink, Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import CircleButton from '../CircleButton/CircleButton'
-import { countNotesForFolder } from '../notes-helpers'
-import './NoteListNav.css'
-import NotefulContext from '../NotefulContext'
+import React, { Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CircleButton from '../CircleButton/CircleButton';
+import { countNotesForFolder } from '../notes-helpers';
+import './NoteListNav.css';
+import NotefulContext from '../NotefulContext';
 
 export default class NoteListNav extends Component {
   deleteFolderRequest(folderId, callback) {
     fetch(`http://localhost:8005/folders/${folderId}`, {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json'
-      }
+        'content-type': 'application/json',
+      },
+
     })
     .then(res => {
-      if(!res.ok) {
+      if (!res.ok) {
         return res.json().then(error => {
-          throw error
-        })
+          throw error;
+        });
       }
     })
     .then(data => {
-      callback(folderId)
-      if(this.props.history !== undefined){
-        this.props.history.goBack()
+      callback(folderId);
+      if (this.props.history !== undefined) {
+        this.props.history.goBack();
       }
     })
     .catch(error => {
-      console.error(error)
-    })
+      console.error(error);
+    });
   }
-  render(){
+
+  render() {
     return (
       <NotefulContext.Consumer>
         {(context) => (
@@ -52,7 +54,7 @@ export default class NoteListNav extends Component {
                       this.deleteFolderRequest(
                         folder.id,
                         context.deleteFolder
-                      )
+                      );
                     }}
                   >
                     <FontAwesomeIcon icon='trash-alt' />
@@ -78,10 +80,10 @@ export default class NoteListNav extends Component {
           </div>
         )}
         </NotefulContext.Consumer>
-    )
+    );
   }
 }
 
 NoteListNav.defaultProps = {
-  folders: []
-}
+  folders: [],
+};
