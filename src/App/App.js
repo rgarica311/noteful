@@ -56,9 +56,8 @@ class App extends Component {
     this.getNotes();
 
   };
-
   getFolders = () =>  {
-    fetch('http://localhost:8005/folders')
+    fetch('https://secret-dawn-62294.herokuapp.com/folders')
     .then(res => {
       if (!res.ok) {
         throw new Error(res.status);
@@ -71,7 +70,7 @@ class App extends Component {
   };
 
   getNotes = () => {
-    fetch('http://localhost:8005/notes')
+    fetch('https://secret-dawn-62294.herokuapp.com/notes')
     .then(res => {
       if (!res.ok) {
         throw new Error(res.stats);
@@ -89,7 +88,7 @@ class App extends Component {
     this.getFolders();
     this.getNotes();
 
-    /*fetch('http://localhost:8005/notes')
+    /*fetch('https://secret-dawn-62294.herokuapp.com/notes')
     .then(res => {
       if(!res.ok) {
         throw new Error(res.stats)
@@ -134,7 +133,7 @@ class App extends Component {
                     </AddNoteError>
                   </div>);
             }}/>
-            
+
             </div>
     );
   }

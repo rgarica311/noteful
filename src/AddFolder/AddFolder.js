@@ -33,7 +33,7 @@ export default class AddFolder extends Component {
     e.preventDefault();
     const name = this.state.name;
     const data = { name: name.value };
-    fetch('http://localhost:8005/folders', {
+    fetch('https://secret-dawn-62294.herokuapp.com/folders', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

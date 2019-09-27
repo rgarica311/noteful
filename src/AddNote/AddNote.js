@@ -79,7 +79,7 @@ export default class AddNote extends Component {
     const data = { name: name.value, folderid: parseInt(folderId),
       content: content.value, modified: new Date(), };
     console.log(`data: ${data}`, data);
-    fetch('http://localhost:8005/notes', {
+    fetch('https://secret-dawn-62294.herokuapp.com/notes', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

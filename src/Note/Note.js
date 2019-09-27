@@ -10,7 +10,7 @@ export default class Note extends Component {
 
   deleteNoteRequest(noteId, callback) {
 
-    fetch(`http://localhost:8005/notes/${noteId}`, {
+    fetch(`https://secret-dawn-62294.herokuapp.com/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',

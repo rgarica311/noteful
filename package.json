@@ -1,6 +1,5 @@
 {
   "name": "noteful-client",
-  "homepage": "http://rgarica311.github.io/noteful",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,8 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "postdeploy": "now alias -A ./build/now.json"
+    "deploy": "now --prod ./build"
   },
   "eslintConfig": {
     "extends": "react-app"

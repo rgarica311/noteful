@@ -8,7 +8,7 @@ import NotefulContext from '../NotefulContext';
 
 export default class NoteListNav extends Component {
   deleteFolderRequest(folderId, callback) {
-    fetch(`http://localhost:8005/folders/${folderId}`, {
+    fetch(`https://secret-dawn-62294.herokuapp.com/folders/${folderId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
