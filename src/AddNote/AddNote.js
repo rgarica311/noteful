@@ -93,12 +93,12 @@ export default class AddNote extends Component {
 
   renderOptions() {
     return (
-      <div>
+      <>
         {this.props.folders.map(folder => (
           <option key={folder.name} value={folder.name}>{folder.name}</option>
         ))
         }
-      </div>
+      </>
     );
 
   }
